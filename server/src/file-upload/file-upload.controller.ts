@@ -1,22 +1,21 @@
 import {
   Controller,
-  Get,
   Post,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-import { FileUploadService } from './file-upload.service';
+// import { FileUploadService } from './file-upload.service';
+import { InjectQueue } from '@nestjs/bull';
+import { Queue } from 'bull';
 
 @Controller('/api/file-upload')
 export class FileUploadController {
-  constructor(private readonly fileUploadService: FileUploadService) {}
-
-  @Get('/')
-  getHello(): string {
-    return this.fileUploadService.getHelloFromFileUpload();
-  }
+  // constructor(private readonly fileUploadService: FileUploadService) {}
+  constructor(
+    @InjectQueue('excel-file-upload-queue') private fileQueue: Queue,
+  ) {}
 
   @Post('/')
   @UseInterceptors(
@@ -30,7 +29,9 @@ export class FileUploadController {
       }),
     }),
   )
-  uploadExcelFile(@UploadedFile() file) {
-    this.fileUploadService.saveFile(file);
+  async uploadExcelFile(@UploadedFile() file) {
+    this.fileQueue.add('excel-file-upload', {
+      file: file,
+    });
   }
 }
