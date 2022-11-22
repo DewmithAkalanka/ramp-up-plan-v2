@@ -1,0 +1,10 @@
+=====Find All Students=====
+query {
+  findAllStudents {
+    id
+    name
+    dob
+    email
+  }
+}
+=====Find All Students=====
