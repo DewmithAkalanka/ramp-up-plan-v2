@@ -20,5 +20,13 @@ type Query {
 }
 
 type Mutation {
+  updateStudent(updateStudentInput: UpdateStudentInput!): User!
   removeStudent(id: Int!): User!
+}
+
+input UpdateStudentInput {
+  id: Int!
+  name: String
+  dob: DateTime
+  email: String
 }

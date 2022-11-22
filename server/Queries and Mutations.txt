@@ -27,3 +27,13 @@ mutation{
   }
 }
 =====Delete a Student by Id=====
+
+=====Update a Student by Id=====
+mutation {
+  updateStudent(updateStudentInput: { id: 4, name: "Aravinda Shyamal", email:"aravinda@gmail.com" }) {
+    id
+    name
+    dob
+    email
+  }
+}

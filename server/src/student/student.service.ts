@@ -23,9 +23,14 @@ export class StudentService {
     });
   }
 
-  // update(id: number, updateStudentInput: UpdateStudentInput) {
-  //   return `This action updates a #${id} student`;
-  // }
+  update(id: number, updateStudentInput: UpdateStudentInput): Promise<User> {
+    this.userRepository.update(id, updateStudentInput);
+    return this.userRepository.findOne({
+      where: {
+        id: id,
+      },
+    });
+  }
 
   remove(id: number): Promise<User> {
     this.userRepository.delete({ id: id });
