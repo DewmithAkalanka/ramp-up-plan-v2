@@ -19,3 +19,11 @@ query {
   }
 }
 =====Find One Student by Id=====
+
+=====Delete a Student by Id=====
+mutation{
+  removeStudent(id:3){
+    id
+  }
+}
+=====Delete a Student by Id=====

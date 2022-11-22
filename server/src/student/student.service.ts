@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -26,7 +27,12 @@ export class StudentService {
   //   return `This action updates a #${id} student`;
   // }
 
-  // remove(id: number) {
-  //   return `This action removes a #${id} student`;
-  // }
+  remove(id: number): Promise<User> {
+    this.userRepository.delete({ id: id });
+    return this.userRepository.findOne({
+      where: {
+        id: id,
+      },
+    });
+  }
 }

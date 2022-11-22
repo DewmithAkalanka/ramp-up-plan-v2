@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
-// import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
-import { Resolver, Query, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Args, Int, Mutation } from '@nestjs/graphql';
 import { StudentService } from './student.service';
 import { User } from 'src/entities/User.entity';
 // import { UpdateStudentInput } from './dto/update-student.input';
@@ -29,8 +28,8 @@ export class StudentResolver {
   //   );
   // }
 
-  // @Mutation(() => User)
-  // removeStudent(@Args('id', { type: () => Int }) id: number) {
-  //   return this.studentService.remove(id);
-  // }
+  @Mutation(() => User, { name: 'removeStudent' })
+  removeStudent(@Args('id', { type: () => Int }) id: number) {
+    return this.studentService.remove(id);
+  }
 }

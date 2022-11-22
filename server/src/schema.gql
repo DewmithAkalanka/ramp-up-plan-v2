@@ -18,3 +18,7 @@ type Query {
   findAllStudents: [User!]!
   findStudentById(id: Int!): User!
 }
+
+type Mutation {
+  removeStudent(id: Int!): User!
+}
