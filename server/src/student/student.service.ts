@@ -14,9 +14,13 @@ export class StudentService {
     return this.userRepository.find();
   }
 
-  // findOne(id: number) {
-  //   return `This action returns a #${id} student`;
-  // }
+  findOne(id: number): Promise<User> {
+    return this.userRepository.findOne({
+      where: {
+        id: id,
+      },
+    });
+  }
 
   // update(id: number, updateStudentInput: UpdateStudentInput) {
   //   return `This action updates a #${id} student`;

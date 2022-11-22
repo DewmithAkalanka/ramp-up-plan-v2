@@ -8,3 +8,14 @@ query {
   }
 }
 =====Find All Students=====
+
+=====Find One Student by Id=====
+query {
+  findStudentById(id: 12) {
+    id
+    name
+    dob
+    email
+  }
+}
+=====Find One Student by Id=====

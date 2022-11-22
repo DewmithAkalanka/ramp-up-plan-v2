@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 // import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
-import { Resolver, Query } from '@nestjs/graphql';
+import { Resolver, Query, Args, Int } from '@nestjs/graphql';
 import { StudentService } from './student.service';
 import { User } from 'src/entities/User.entity';
 // import { UpdateStudentInput } from './dto/update-student.input';
@@ -14,10 +14,10 @@ export class StudentResolver {
     return this.studentService.findAll();
   }
 
-  // @Query(() => User, { name: 'student' })
-  // findOne(@Args('id', { type: () => Int }) id: number) {
-  //   return this.studentService.findOne(id);
-  // }
+  @Query(() => User, { name: 'findStudentById' })
+  findOne(@Args('id', { type: () => Int }) id: number) {
+    return this.studentService.findOne(id);
+  }
 
   // @Mutation(() => User)
   // updateStudent(
