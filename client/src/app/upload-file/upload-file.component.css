@@ -1,0 +1,13 @@
+.container{
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+}
+
+.inputArea {
+    margin-right: 10px;
+}
+
+.btnArea {
+    margin-left: 10px;
+}
