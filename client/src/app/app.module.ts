@@ -16,8 +16,18 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+
 import { AddStudentComponent } from './add-student/add-student.component';
+import { AddStudentFormComponent } from './add-student/add-student-form/add-student-form.component';
 import { GraphQLModule } from './graphql.module';
+import {
+  MatFormFieldModule,
+  MatLabel,
+  MAT_FORM_FIELD_DEFAULT_OPTIONS,
+} from '@angular/material/form-field';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -26,6 +36,7 @@ import { GraphQLModule } from './graphql.module';
     DataTableComponent,
     UploadFileComponent,
     AddStudentComponent,
+    AddStudentFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,6 +45,10 @@ import { GraphQLModule } from './graphql.module';
     MatToolbarModule,
     MatIconModule,
     MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     FormsModule,
     MatDialogModule,
     MatButtonModule,
@@ -42,7 +57,12 @@ import { GraphQLModule } from './graphql.module';
     HttpClientModule,
     GraphQLModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: { appearance: 'outline' },
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
