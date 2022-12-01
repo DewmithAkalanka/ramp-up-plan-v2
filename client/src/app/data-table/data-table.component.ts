@@ -55,4 +55,9 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
+
+  onRowClicked(Student: Student) {
+    console.log('Working...');
+    console.log(Student);
+  }
 }
