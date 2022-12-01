@@ -28,6 +28,7 @@ import {
   MAT_FORM_FIELD_DEFAULT_OPTIONS,
 } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
+import { EditStudentComponent } from './edit-student/edit-student.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     UploadFileComponent,
     AddStudentComponent,
     AddStudentFormComponent,
+    EditStudentComponent,
   ],
   imports: [
     BrowserModule,
