@@ -27,8 +27,12 @@
       ></mat-datepicker>
     </mat-form-field>
     <br />
-    <button mat-raised-button color="accent" (click)="onSubmit()">
+    <button mat-raised-button color="accent" (click)="onEdit()">
       Edit Student
+    </button>
+    <br />
+    <button mat-raised-button style="color: red" (click)="onDelete()">
+      Delete this Student
     </button>
   </div>
 </form>
