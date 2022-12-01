@@ -33,6 +33,7 @@ import {
   EditStudentComponent,
   EditStudentSuccessDialog,
 } from './edit-student/edit-student.component';
+import { DeleteStudentComponent } from './delete-student/delete-student.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import {
     AddStudentFormComponent,
     EditStudentComponent,
     EditStudentSuccessDialog,
+    DeleteStudentComponent,
   ],
   imports: [
     BrowserModule,

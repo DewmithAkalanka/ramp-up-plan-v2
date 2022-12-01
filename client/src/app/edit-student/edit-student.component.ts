@@ -4,6 +4,7 @@ import { Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Apollo, gql } from 'apollo-angular';
 import { MatDialog } from '@angular/material/dialog';
+import { DeleteStudentComponent } from '../delete-student/delete-student.component';
 
 const EDIT_STUDENT = gql`
   mutation ($id: Int!, $name: String!, $email: String!, $dob: DateTime!) {
@@ -92,7 +93,12 @@ export class EditStudentComponent implements OnInit {
       );
   }
   onDelete() {
-    console.log('Deleted');
+    this.dialog.open(DeleteStudentComponent, {
+      data: {
+        id: this.id,
+        name: this.name,
+      },
+    });
   }
 }
 
