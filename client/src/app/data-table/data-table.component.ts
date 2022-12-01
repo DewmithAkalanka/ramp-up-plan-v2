@@ -3,7 +3,9 @@ import { Apollo, gql } from 'apollo-angular';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSort, Sort } from '@angular/material/sort';
 import { EditStudentComponent } from '../edit-student/edit-student.component';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 
 const GET_STUDENTS = gql`
   query {
@@ -32,7 +34,11 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['id', 'name', 'dob', 'email'];
   clickedRows = new Set<Student>();
 
-  constructor(private apollo: Apollo, public dialog: MatDialog) {}
+  constructor(
+    private apollo: Apollo,
+    public dialog: MatDialog,
+    private _liveAnnouncer: LiveAnnouncer
+  ) {}
 
   STUDENT_DATA: Student[] = [];
 
@@ -46,16 +52,22 @@ export class DataTableComponent implements OnInit, AfterViewInit {
         query: GET_STUDENTS,
       })
       .valueChanges.subscribe((result: any) => {
-        this.dataSource.data = result.data.findAllStudents;
+        const dataArray = [...result.data.findAllStudents]; // U cant mutate the result, but to make a copy using spread operator and mutate
+        const sortedByIDArray = dataArray.sort((a: any, b: any) =>
+          a.id > b.id ? 1 : b.id > a.id ? -1 : 0
+        );
+        this.dataSource.data = sortedByIDArray;
       });
   }
 
   dataSource = new MatTableDataSource<Student>(this.STUDENT_DATA);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   onRowClicked(Student: Student) {
@@ -63,5 +75,18 @@ export class DataTableComponent implements OnInit, AfterViewInit {
       data: Student,
     });
     dialogRef.afterClosed();
+  }
+
+  /** Announce the change in sort state for assistive technology. */
+  announceSortChange(sortState: Sort) {
+    // This example uses English messages. If your application supports
+    // multiple language, you would internationalize these strings.
+    // Furthermore, you can customize the message to add additional
+    // details about the values being sorted.
+    if (sortState.direction) {
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+    } else {
+      this._liveAnnouncer.announce('Sorting cleared');
+    }
   }
 }

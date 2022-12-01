@@ -17,6 +17,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
+import { MatSortModule } from '@angular/material/sort';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { AddStudentComponent } from './add-student/add-student.component';
@@ -28,7 +29,10 @@ import {
   MAT_FORM_FIELD_DEFAULT_OPTIONS,
 } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
-import { EditStudentComponent } from './edit-student/edit-student.component';
+import {
+  EditStudentComponent,
+  EditStudentSuccessDialog,
+} from './edit-student/edit-student.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +43,7 @@ import { EditStudentComponent } from './edit-student/edit-student.component';
     AddStudentComponent,
     AddStudentFormComponent,
     EditStudentComponent,
+    EditStudentSuccessDialog,
   ],
   imports: [
     BrowserModule,
@@ -55,6 +60,7 @@ import { EditStudentComponent } from './edit-student/edit-student.component';
     MatDialogModule,
     MatButtonModule,
     MatPaginatorModule,
+    MatSortModule,
     ReactiveFormsModule,
     HttpClientModule,
     GraphQLModule,

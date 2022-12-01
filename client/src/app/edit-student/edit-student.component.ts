@@ -110,4 +110,9 @@ export class EditStudentSuccessDialog {
   name = this.data.name;
   email = this.data.email;
   dob = this.data.dob;
+
+  onClickOK() {
+    this.dialog.closeAll();
+    window.location.reload();
+  }
 }
