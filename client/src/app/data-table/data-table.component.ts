@@ -31,8 +31,20 @@ export interface Student {
   styleUrls: ['./data-table.component.css'],
 })
 export class DataTableComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['id', 'name', 'dob', 'email'];
+  displayedColumns: string[] = ['id', 'name', 'dob', 'email', 'age'];
   clickedRows = new Set<Student>();
+
+  // Calculate age
+  getAge(dateString) {
+    const today = new Date();
+    const birthDate = new Date(dateString);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const month = today.getMonth() - birthDate.getMonth();
+    if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
+  }
 
   constructor(
     private apollo: Apollo,
