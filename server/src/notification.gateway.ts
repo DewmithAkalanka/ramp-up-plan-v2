@@ -1,5 +1,9 @@
 import { Logger } from '@nestjs/common';
-import { SubscribeMessage, WebSocketGateway } from '@nestjs/websockets';
+import {
+  ConnectedSocket,
+  SubscribeMessage,
+  WebSocketGateway,
+} from '@nestjs/websockets';
 import {
   OnGatewayInit,
   WsResponse,
@@ -8,7 +12,7 @@ import {
 } from '@nestjs/websockets/interfaces';
 import { Socket, Server } from 'socket.io';
 
-@WebSocketGateway(81, { cors: true })
+@WebSocketGateway({ cors: true })
 export class NotificationGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
@@ -26,8 +30,12 @@ export class NotificationGateway
 
   private logger: Logger = new Logger('NotificationGateway');
 
-  @SubscribeMessage('msgToServer')
+  @SubscribeMessage('upload-success-to-server')
   handleMessage(client: Socket, text: string): WsResponse<string> {
-    return { event: 'msgToClient', data: text };
+    this.logger.log(`Message from client: ${text}`);
+    return {
+      event: 'upload-success-to-client',
+      data: 'File Uploaded Successfully!',
+    };
   }
 }

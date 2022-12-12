@@ -34,7 +34,6 @@ export class FileUploadService {
     // Remove the first element from the derived array => since its a index of column names
     result.Sheet1.shift();
     const userArrayDerived = result.Sheet1;
-    console.log(userArrayDerived);
 
     let users;
 

@@ -33,5 +33,8 @@ export class FileUploadController {
     this.fileQueue.add('excel-file-upload', {
       file: file,
     });
+    return {
+      message: 'File uploaded successfully',
+    };
   }
 }
