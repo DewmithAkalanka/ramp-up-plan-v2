@@ -20,6 +20,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
 import { AddStudentComponent } from './add-student/add-student.component';
 import { AddStudentFormComponent } from './add-student/add-student-form/add-student-form.component';
 import { GraphQLModule } from './graphql.module';
@@ -34,6 +36,11 @@ import {
   EditStudentSuccessDialog,
 } from './edit-student/edit-student.component';
 import { DeleteStudentComponent } from './delete-student/delete-student.component';
+
+const config: SocketIoConfig = {
+  url: 'http://localhost:81',
+  options: {},
+};
 
 @NgModule({
   declarations: [
@@ -66,6 +73,7 @@ import { DeleteStudentComponent } from './delete-student/delete-student.componen
     ReactiveFormsModule,
     HttpClientModule,
     GraphQLModule,
+    SocketIoModule.forRoot(config),
   ],
   providers: [
     {
