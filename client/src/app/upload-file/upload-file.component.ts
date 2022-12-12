@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+import { Socket } from 'ngx-socket-io';
 
 @Component({
   selector: 'app-upload-file',
@@ -16,7 +18,11 @@ export class UploadFileComponent {
     fileSource: new FormControl('', [Validators.required]),
   });
 
-  constructor(private http: HttpClient, public dialog: MatDialog) {}
+  constructor(
+    private http: HttpClient,
+    public dialog: MatDialog,
+    private socket: Socket
+  ) {}
 
   get f() {
     return this.myForm.controls;
@@ -36,9 +42,19 @@ export class UploadFileComponent {
     this.http
       .post('http://localhost:3000/api/file-upload', formData)
       .subscribe((data) => {
-        //alert('Uploaded successfully');
-        const dialogRef = this.dialog.open(uploadSuccessDialog);
-        dialogRef.afterClosed();
+        if (data) {
+          console.log(this.socket);
+          this.socket.emit(
+            'upload-success-to-server',
+            'File Uploading started....'
+          );
+          this.socket.on('upload-success-to-client', (data) => {
+            const dataToSend = {
+              message: data.toString(),
+            };
+            this.dialog.open(uploadSuccessDialog, { data: dataToSend });
+          });
+        }
       });
   }
 }
@@ -47,4 +63,6 @@ export class UploadFileComponent {
   selector: 'upload-success-dialog',
   templateUrl: './upload-sucess-dialog.html',
 })
-export class uploadSuccessDialog {}
+export class uploadSuccessDialog {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
+}

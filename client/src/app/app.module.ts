@@ -38,7 +38,7 @@ import {
 import { DeleteStudentComponent } from './delete-student/delete-student.component';
 
 const config: SocketIoConfig = {
-  url: 'http://localhost:81',
+  url: 'http://localhost:3000',
   options: {},
 };
 

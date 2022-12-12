@@ -8,11 +8,7 @@ import { Socket } from 'ngx-socket-io';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  constructor(private socket: Socket) {
-    this.socket.on('msgToClient', (data: string) => {
-      console.log(data);
-    });
-  }
+  constructor(private socket: Socket) {}
 
   title = 'client';
 }
