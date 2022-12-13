@@ -2,6 +2,7 @@ import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Socket } from 'ngx-socket-io';
 
@@ -21,7 +22,8 @@ export class UploadFileComponent {
   constructor(
     private http: HttpClient,
     public dialog: MatDialog,
-    private socket: Socket
+    private socket: Socket,
+    private snackBar: MatSnackBar
   ) {}
 
   get f() {
@@ -39,6 +41,11 @@ export class UploadFileComponent {
   submit() {
     const formData = new FormData();
     formData.append('excel', this.myForm.get('fileSource')!.value);
+
+    this.dialog.open(uploadSuccessDialog, {
+      data: 'File Uploading Started...',
+    });
+
     this.http
       .post('http://localhost:3000/api/file-upload', formData)
       .subscribe((data) => {
@@ -52,8 +59,14 @@ export class UploadFileComponent {
             const dataToSend = {
               message: data.toString(),
             };
-            this.dialog.open(uploadSuccessDialog, { data: dataToSend });
+            let snackBarRef = this.snackBar.open(dataToSend.message, 'OK');
           });
+        }
+        if (!data) {
+          let snackBarRef = this.snackBar.open(
+            'File Uploading Failed',
+            'Retry'
+          );
         }
       });
   }

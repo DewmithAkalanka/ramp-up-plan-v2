@@ -37,6 +37,8 @@ import {
 } from './edit-student/edit-student.component';
 import { DeleteStudentComponent } from './delete-student/delete-student.component';
 
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 const config: SocketIoConfig = {
   url: 'http://localhost:3000',
   options: {},
@@ -73,6 +75,7 @@ const config: SocketIoConfig = {
     ReactiveFormsModule,
     HttpClientModule,
     GraphQLModule,
+    MatSnackBarModule,
     SocketIoModule.forRoot(config),
   ],
   providers: [
