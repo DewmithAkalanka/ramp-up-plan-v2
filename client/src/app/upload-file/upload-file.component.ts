@@ -6,6 +6,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Socket } from 'ngx-socket-io';
 
+import Axios from 'axios';
+import axios from 'axios';
+
 @Component({
   selector: 'app-upload-file',
   templateUrl: './upload-file.component.html',
@@ -38,37 +41,47 @@ export class UploadFileComponent {
     }
   }
 
-  submit() {
+  async submit() {
     const formData = new FormData();
     formData.append('excel', this.myForm.get('fileSource')!.value);
 
-    this.dialog.open(uploadSuccessDialog, {
+    const dialogRef = this.dialog.open(uploadSuccessDialog, {
       data: 'File Uploading Started...',
     });
 
-    this.http
-      .post('http://localhost:3000/api/file-upload', formData)
-      .subscribe((data) => {
-        if (data) {
-          console.log(this.socket);
-          this.socket.emit(
-            'upload-success-to-server',
-            'File Uploading started....'
-          );
-          this.socket.on('upload-success-to-client', (data) => {
-            const dataToSend = {
-              message: data.toString(),
-            };
-            let snackBarRef = this.snackBar.open(dataToSend.message, 'OK');
+    dialogRef.afterOpened().subscribe((_) => {
+      setTimeout(() => {
+        dialogRef.close();
+      }, 1500);
+    });
+
+    let snackBarRef;
+
+    try {
+      const data = await this.http
+        .post('http://localhost:3000/api/file-upl]oad', formData)
+        .toPromise();
+      if (data) {
+        this.socket.emit(
+          'upload-success-to-server',
+          'File Uploading started....'
+        );
+        this.socket.on('upload-success-to-client', (data) => {
+          const dataToSend = {
+            message: data.toString(),
+          };
+          snackBarRef = this.snackBar.open(dataToSend.message, 'OK', {
+            duration: 5000,
           });
-        }
-        if (!data) {
-          let snackBarRef = this.snackBar.open(
-            'File Uploading Failed',
-            'Retry'
-          );
-        }
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      snackBarRef = this.snackBar.open(error.message, 'Retry', {});
+      snackBarRef.onAction().subscribe(() => {
+        this.submit();
       });
+    }
   }
 }
 
